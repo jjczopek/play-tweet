@@ -1,0 +1,43 @@
+body {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header {
+/*background-color: #ff6600;*/
+}
+
+#content {
+    float: left;
+    width: 73%; /*background-color: #BAE568;*/
+
+}
+
+#rightSection {
+    float: right;
+    width: 25%; /*background-color: #ffcc00;*/
+}
+
+ul.pagination {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.pagination li {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+    margin-right: 2px;
+}
+
+form div {
+    margin-top: 0.3em;
+}
+
+
+

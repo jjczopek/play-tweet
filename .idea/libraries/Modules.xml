@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Modules">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../play-1.2.1/modules/securepermissions-1.2.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../play-1.2.1/modules/paginate-head/lib" />
+      <root url="file://$PROJECT_DIR$/../../play-1.2.1/modules/resteasy/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../play-1.2.1/modules/paginate-head/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../play-1.2.1/modules/resteasy/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../play-1.2.1/modules/securepermissions-1.2.1/lib" recursive="false" />
+  </library>
+</component>

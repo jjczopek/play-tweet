@@ -1,0 +1,26 @@
+#{extends 'main.html' /}
+#{set title:'User profile' /}
+
+<div class="ui-widget-content ui-corner-all" style="padding: 0.3em;">
+    <div><strong>Login:</strong> ${user.login}</div>
+    <div><strong>Full name:</strong> ${user.fullName}</div>
+    <div><strong>Last seen:</strong> ${user.lastLogin?.format('dd-MM-yyyy HH:mm')?: "n/a"}</div>
+    <div><strong>Tweets so far:</strong> ${user.tweets.size()}</div>
+    <div>Currently following <strong>${user.following?.size()}</strong> users</div>
+    #{if user.following.size() > 0}
+    <p class="following" style="font-size: 0.6em;">
+        #{list items:user.following, as:'user'}
+        #{a @Users.profile(user.login)}${user.fullName}#{/a}
+        #{/list}
+    </p>
+    #{/if}
+
+    <div>Currently followed by <strong>${user.followedBy?.size()}</strong> users</div>
+
+    #{if user.followedBy.size() > 0}
+    <p class="followedBy" style="font-size: 0.6em;">#{list items:user.followedBy, as:'user'}
+        #{a @Users.profile(user.login)}${user.fullName}#{/a}
+        #{/list}
+    </p>
+    #{/if}
+</div>

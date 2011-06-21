@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+
+<div id="login" class="ui-widget ui-widget-content ui-corner-all" style="padding: 0.3em;">
+
+    <h1>&{'secure.title'}</h1>
+
+    #{form @authenticate()}
+
+    <div id="username-field">
+        <label for="username">&{'secure.username'}</label>
+        <input type="text" name="username" id="username" value="${flash.username}"/>
+    </div>
+    <div id="password-field">
+        <label for="password">&{'secure.password'}</label>
+        <input type="password" name="password" id="password" value=""/>
+    </div>
+    <div id="remember-field">
+        <input type="checkbox" name="remember" id="remember" value=${flash.remember ? 'checked="true"' : ''}/>
+        <label for="remember">&{'secure.remember'}</label>
+    </div>
+    <div id="signin-field">
+        <input type="submit" id="signin" value="&{'secure.signin'}"/>
+    </div>
+    #{/form}
+</div>

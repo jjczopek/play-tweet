@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+# Import RESTEasy routes
+*     /                       module:resteasy
+GET     /                                       Application.index
+
+# Login and logout
+GET     /login                                  Secure.login
+GET     /logout                                 Secure.logout
+
+# user tweets
+GET     /tweets/post                            Tweets.post
+GET     /tweets/show                            Tweets.show
+GET     /tweets/all                             Tweets.all
+GET     /tweets/{login}                         Tweets.userTweets
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

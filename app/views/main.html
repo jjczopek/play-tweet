@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>#{get 'title' /}</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/sunny/jquery-ui-1.8.13.custom.css'}">
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/play-pagination.css'}">-->
+    <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/jquery-ui-1.8.13.custom.min.js'}" type="text/javascript"
+            charset="utf-8"></script>
+    <script src="@{'/public/javascripts/tweet.js'}" type="text/javascript" charset="utf-8"></script>
+    #{get 'moreScripts' /}
+</head>
+<body class="ui-widget">
+<div id="header">header</div>
+<!-- #header end -->
+<div id="content">
+
+    #{ifErrors}
+    <div class="ui-widget">
+        <div style="padding: 0pt 0.3em;" class="ui-state-error ui-corner-all">
+            #{errors}
+            <div>
+                <span style="float: left; margin-right: 0.3em; margin-top:0.3em;" class="ui-icon ui-icon-alert"></span>
+                ${error}
+            </div>
+
+            #{/errors}
+        </div>
+    </div>
+    #{/ifErrors}
+
+    #{if flash.error}
+    <div class="ui-widget">
+        <div style="padding: 0.3em;" class="ui-state-error ui-corner-all">
+            <p>
+                <span style="float: left; margin-right: 0.3em; margin-top:0.3em;" class="ui-icon ui-icon-alert"></span>
+                ${flash.error}
+            </p>
+        </div>
+    </div>
+    #{/if}
+    #{if flash.success}
+    <div class="ui-widget" style="padding: 0.3em;">
+        <div style="margin-top: 0.3em; padding: 0pt 0.7em; font-size:0.7em;" class="ui-state-highlight ui-corner-all">
+            <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+                ${flash.success}</p>
+        </div>
+    </div>
+    #{/if}
+
+    #{doLayout /}
+</div>
+<!-- #content end -->
+<div id="rightSection" class="ui-widget ui-widget-content ui-corner-all" style="padding: 0.3em">
+    #{if session["username"]}
+    Logged in as <strong>${session.username}</strong><br/>
+    #{a @Secure.logout()}Logout #{/a}
+    #{/if}
+    #{else}
+    #{a @Secure.login()}Login#{/a}
+    #{/else}
+</div>
+<!-- #rightSection end -->
+</body>
+</html>

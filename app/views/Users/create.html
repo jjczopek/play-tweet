@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+#{set title:'Create user' /}
+
+
+#{form @Users.save()}
+<p><label for="login">Login: </label><br/>
+    <input type="text" name="user.login" id="login" value="${user?.login}"/></p>
+
+<p><label for="fullName">Full name: </label><br/>
+    <input type="text" name="user.fullName" id="fullName" value="${user?.fullName}"/></p>
+
+<p><label for="password">Password: </label><br/>
+    <input type="password" name="user.password" id="password"/></p>
+
+<p><label for="password2">Repeat password: </label><br/>
+    <input type="password" name="user.password2" id="password2"/></p>
+
+<p><input type="submit" name="create" value="Save"/></p>
+#{/form}

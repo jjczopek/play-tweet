@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:"${fullName}'s tweets"  /}
+
+#{paginate.list items:paginator, as:'t'}
+#{tweet tweet:t /}
+#{/paginate.list}
+
+#{paginate.summary items:paginator/}
+
+#{paginate.controls items:paginator /}

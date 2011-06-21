@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'Post tweet' /}
+
+#{form @Tweets.save()}
+<p><label for="content">Tweet </label><br/>
+    <textarea rows="5" cols="10" id="content" name="content">${content}</textarea>
+</p>
+
+<p><input type="submit" name="create" value="Save"/></p>
+#{/form}

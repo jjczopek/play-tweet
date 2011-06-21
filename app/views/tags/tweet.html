@@ -1,0 +1,9 @@
+<div class="ui-widget-content ui-corner-all" style="margin-top:0.3em; padding:0.2em;">
+    <div style="font-size:0.8em;"><strong>Author:</strong> <a href="@{Tweets.userTweets(_tweet?.author?.login)}">${_tweet?.author?.fullName}</a>
+        || ${_tweet?.dateCreated?.format("dd-MM-yyyy HH:mm:ss")}
+    </div>
+    <hr/>
+    <div>
+        ${_tweet?.content}
+    </div>
+</div>

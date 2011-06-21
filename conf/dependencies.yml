@@ -1,0 +1,7 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> securepermissions 1.2.1
+    - play -> paginate head
+    - play -> resteasy 1.3.1

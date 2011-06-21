@@ -1,0 +1,6 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+validation.user.login.unique = This login is already taken
+validation.user.password.weak = Password you specified is too weak
+validation.user.password.not.equal = Both passwords must be equal

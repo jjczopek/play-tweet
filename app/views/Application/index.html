@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h4 class="ui-state-highlight ui-corner-all" style="padding: 0.2em;">
+    Welcome
+    #{if loggedUser}
+    ${loggedUser.fullName}
+    #{/if}
+    #{else}
+    stranger
+    #{/else}
+    !
+</h4>
+
+<div style="padding: 0.3em;">
+
+    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">Newest tweets</div>
+    #{list items: newestTweets, as:'tweet'}
+    #{tweet tweet:tweet /}
+    #{/list}
+    #{else}
+    Sorry, no tweets.
+    #{/else}
+</div>
+
+#{if loggedUser}
+<div class="ui-widget" style="padding: 0.3em;">
+    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">Followed users tweets:</div>
+    #{list items: followedUsersTweets, as:'tweet'}
+    #{tweet tweet:tweet /}
+    #{/list}
+    #{else}
+    <div style="margin-top: 0.3em; padding: 0pt 0.7em; font-size:0.7em;" class="ui-state-highlight ui-corner-all">
+        <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+            Sorry, users You are following didn't tweet anything.</p>
+    </div>
+
+    #{/else}
+</div>
+#{/if}

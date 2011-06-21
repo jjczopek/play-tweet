@@ -1,0 +1,19 @@
+package permissions;
+
+import play.modules.securePermissions.PermissionCheck;
+import play.modules.securePermissions.Role;
+
+rule UserCanTweet
+when
+    $c: PermissionCheck(action in ("post", "save", "showProfile"))
+    Role(name == "ROLE_USER")
+then
+    $c.grant();
+end
+
+rule AnyoneInvited
+when
+    $c: PermissionCheck(action in ("createUser", "saveUser", "showTweet"))
+then
+    $c.grant();
+end
