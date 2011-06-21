@@ -1,0 +1,2 @@
+Simple Tweeter-like web application written in Java with Play! framework. Contains a simple web interface and REST API,
+provided by RestEasy JAX-WS implementation.
