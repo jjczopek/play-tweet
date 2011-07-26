@@ -2,13 +2,16 @@ package controllers;
 
 import models.Role;
 import models.User;
+import play.data.validation.Match;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.data.validation.Validation;
+import play.i18n.Messages;
 import play.mvc.Before;
 import play.mvc.Controller;
 
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * User controller is responsible responsible for user management:
@@ -80,10 +83,53 @@ public class Users extends Controller {
 
     }
 
+    public static void list() {
+        List<User> users = User.all().fetch();
+        render(users);
+    }
+
+    public static void changePassword(@Required(message = "validation.user.old.password.required") String oldPassword,
+                                      @Required(message = "validation.user.password.required") @Match(value = User.PASSWORD_REGEX, message = "validation.user.password.match") String newPassword,
+                                      @Required(message = "validation.user.password.both.required") String newPassword2) {
+
+        if (request.method.equalsIgnoreCase("POST")) {
+            if (!Security.isConnected()) {
+                redirectToLoginPage();
+            } else {
+
+                User loggedUser = User.getByLogin(Security.connected());
+
+                if (!newPassword.equals(newPassword2)) {
+                    Validation.addError("newPassword", "validation.user.password.not.equal");
+                }
+
+                if (!loggedUser.password.equals(Security.hashUserPassword(oldPassword))) {
+                    Validation.addError("oldPassword", "validation.user.old.password.incorrect");
+                }
+
+                if (Validation.hasErrors()) {
+                    render();
+                } else {
+                    loggedUser.password = Security.hashUserPassword(newPassword);
+                    loggedUser.save();
+                    flash.success("user.password.changed");
+                    redirect("/");
+                }
+            }
+        } else {
+            Validation.clear(); // we don't need errors when first entering the form
+            if (!Security.isConnected()) {
+                redirectToLoginPage();
+            } else {
+                render();
+            }
+        }
+
+    }
 
     public static void follow(@Required String loginToFollow) {
         if (Validation.hasErrors()) {
-            flash.error("You must provide user login you want to follow");
+            flash.error("user.follow.login.empty");
             redirectToPrevious();
             return;
         }
@@ -94,15 +140,22 @@ public class Users extends Controller {
             User userToFollow = User.find("byLogin", loginToFollow).first();
 
             if (userToFollow == null) {
-                flash.error("User '%s' was not found", loginToFollow);
+                flash.error(Messages.get("user.follow.no.user", loginToFollow));
                 redirect("/");
                 return;
             } else {
                 //userToFollow.followedBy.add(loggedUser);
                 //userToFollow.save();
+
+                if (loggedUser.equals(userToFollow)) {
+                    flash.error("user.profile.cant.follow.yourself");
+                    redirect("/");
+                    return;
+                }
+
                 if (loggedUser.addFollowingUser(userToFollow))
-                    flash.success("You are now following %s", userToFollow.fullName);
-                else flash.success("You are already following this user");
+                    flash.success(Messages.get("user.follow.success", userToFollow.fullName));
+                else flash.error(Messages.get("user.follow.already.following", userToFollow.fullName));
                 redirect("/");
                 return;
             }
@@ -123,7 +176,7 @@ public class Users extends Controller {
     }
 
     private static void redirectToLoginPage() {
-        flash.error("You must log in first");
+        flash.error("user.must.login");
         redirect("/login");
     }
 }

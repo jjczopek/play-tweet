@@ -1,6 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Account created' /}
+#{set title:'title.created' /}
 
-<h1>Account created</h1>
-<p>Your account was successfully created. You can now login with your login (${user.login}) and password you
-    specified.</p>
+<h1>&{'user.account.created'}</h1>
+<p>&{'user.account.created.message', user.login}</p>

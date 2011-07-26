@@ -20,7 +20,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@XmlRootElement(name = "tweet")
+@XmlRootElement
 @XmlAccessorType(value = XmlAccessType.NONE)
 public class Tweet extends Model {
 

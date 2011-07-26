@@ -1,0 +1,11 @@
+Role(adminRole):
+  roleName: ROLE_ADMIN
+
+Role(userRole):
+  roleName: ROLE_USER
+
+User(admin):
+  login: admin
+  password: f1682b54de57d202ba947a0af26399fd
+  fullName: Administrator
+  userRoles: [adminRole, userRole]

@@ -56,4 +56,10 @@ public class Session {
         }
         return "";
     }
+
+    @Path("/valid/{sessionId}")
+    @POST
+    public Boolean isSessionValid(@PathParam("sessionId") String sessionId) {
+        return RestSession.isSessionValid(sessionId, false);
+    }
 }

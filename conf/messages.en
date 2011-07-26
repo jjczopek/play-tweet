@@ -4,8 +4,8 @@
 validation.user.login.unique=This login is already taken
 validation.user.password.weak=Password you specified is too weak
 validation.user.password.not.equal=Both passwords must be equal
-validation.user.password.both.required=You must repeat your new password
 validation.user.password.required=Password is required
+validation.user.password.both.required=You must repeat your new password
 validation.user.fullName.required=Full name is required
 validation.user.password.match=Password must be from 8 to 64 characters long, contain at least: one capital letter, one non-capital letter, one special character, one number
 validation.user.old.password.incorrect=You provided wrong old password
@@ -32,9 +32,6 @@ common.save=Save
 common.cancel=Cancel
 common.login=Login
 common.logout=Logout
-common.na=n/a
-common.yes=Yes
-common.no=No
 
 common.author=Author
 common.navigation.new.account=New account
@@ -43,7 +40,11 @@ common.navigation.login=Login
 common.navigation.new.tweet=New tweet
 common.navigation.user.list=Users
 common.navigation.all.tweets=All tweets
-common.navigation.change.password=Change password
+
+common.na=n/a
+common.yes=Yes
+common.no=No
+
 
 main.loggedin.message=Logged in as <strong>%s</strong>
 main.tweets.newest=Newest tweets
@@ -70,6 +71,9 @@ user.password.changed=Your password was changed
 
 user.list.title=Users
 user.list.empty=There are no registered users.
+user.account.created=Account created
+user.account.created.message=Your account was successfully created. You can now login with your login (%s) and password you specified.
+
 tweet.content=Content
 tweet.deleted=Tweet was deleted.
 tweet.not.found=Tweet was not found.
@@ -90,4 +94,4 @@ title.change.password=Change password
 
 user.account.created=Account created
 user.account.created.message=Your account has been created. You can now login with your login (%s) and password you provided during registration process.
-
+common.navigation.change.password=Change password

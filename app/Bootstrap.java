@@ -19,7 +19,7 @@ public class Bootstrap extends Job {
     public void doJob() throws Exception {
         // check if db is empty
         if (Role.count() == 0) {
-            Fixtures.loadModels("initial-data.yml");
+            Fixtures.loadModels("initial-data_2.yml");
         }
         Logger.info("Role count is %s", Role.count());
         Logger.info("User count is %s", User.count());

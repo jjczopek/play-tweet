@@ -4,7 +4,8 @@
 
 # Home page
 # Import RESTEasy routes
-*     /                       module:resteasy
+# *     /                       module:resteasy
+*       /rest/{<.*>ignored}                     RESTEasyController.serve
 GET     /                                       Application.index
 
 # Login and logout
@@ -15,6 +16,7 @@ GET     /logout                                 Secure.logout
 GET     /tweets/post                            Tweets.post
 GET     /tweets/show                            Tweets.show
 GET     /tweets/all                             Tweets.all
+GET     /tweets/delete                          Tweets.delete
 GET     /tweets/{login}                         Tweets.userTweets
 
 # Ignore favicon requests

@@ -5,7 +5,6 @@ import models.User;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.data.validation.Validation;
-import play.modules.paginate.ModelPaginator;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 
@@ -25,13 +24,13 @@ public class Tweets extends Controller {
         if (Secure.checkPermission(null, "post")) {
             render("Tweets/tweet.html");
         } else {
-            flash.error("You must log in to tweet");
+            flash.error("tweet.login.first");
             redirect("/login");
         }
 
     }
 
-    public static void save(@Required @MaxSize(255) String content) {
+    public static void save(@Required(message = "") @MaxSize(255) String content) {
         if (Secure.checkPermission(null, "save")) {
             if (Validation.hasErrors()) {
                 render("Tweets/tweet.html", content);
@@ -46,40 +45,59 @@ public class Tweets extends Controller {
                 }
             }
         } else {
-            flash.error("You must log in to tweet");
+            flash.error("tweet.login.first");
             redirect("/login");
         }
     }
 
     public static void show(long tweetId) {
         Tweet tweet = Tweet.findById(tweetId);
+
         if (tweet == null) {
-            flash.error("No such post");
+            flash.error("tweet.not.found");
             redirect("/");
             return;
         }
 
-        render(tweet);
+        User loggedUser = User.getByLogin(Security.connected());
+
+        render(tweet, loggedUser);
     }
 
     public static void all() {
-        ModelPaginator<Tweet> paginator = new ModelPaginator<Tweet>(Tweet.class);
+        User loggedUser = User.getByLogin(Security.connected());
+        //ModelPaginator<Tweet> paginator = new ModelPaginator<Tweet>(Tweet.class);
+        List<Tweet> tweets = Tweet.find("order by dateCreated desc").fetch();
+        ValuePaginator<Tweet> paginator = new ValuePaginator<Tweet>(tweets);
         paginator.setPagesDisplayed(2);
-        render(paginator);
+        render(paginator, loggedUser);
+    }
+
+    public static void delete(Long tweetId) {
+        Tweet t = Tweet.findById(tweetId);
+        if (t != null) {
+            t.delete();
+            flash.success("tweet.deleted");
+        } else {
+            flash.error("tweet.not.found");
+        }
+        //Application.index();
+        redirect("/");
     }
 
     public static void userTweets(String login) {
+        User loggedUser = User.getByLogin(Security.connected());
         User user = User.find("byLogin", login).first();
         //page = (page == null) ? 1 : page;
         if (user == null) {
-            flash.error("No such user");
+            flash.error("user.no.such.user");
             redirect("/");
         } else {
             List<Tweet> userTweets = Tweet.find("author.login = ? order by dateCreated desc", login).fetch();
             ValuePaginator<Tweet> paginator = new ValuePaginator<Tweet>(userTweets);
             paginator.setPagesDisplayed(2);
             String fullName = user.fullName;
-            render(paginator, fullName);
+            render(paginator, fullName, loggedUser);
         }
     }
 

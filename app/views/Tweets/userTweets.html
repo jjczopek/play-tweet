@@ -1,8 +1,8 @@
 #{extends 'main.html' /}
-#{set title:"${fullName}'s tweets"  /}
+#{set title:'title.userposts'  /}
 
 #{paginate.list items:paginator, as:'t'}
-#{tweet tweet:t /}
+#{tweet tweet:t, loggedUser:loggedUser /}
 #{/paginate.list}
 
 #{paginate.summary items:paginator/}

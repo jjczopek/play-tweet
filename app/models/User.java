@@ -22,31 +22,31 @@ import java.util.*;
 @XmlAccessorType(value = XmlAccessType.NONE)
 public class User extends Model {
 
-    private static final String PASSWORD_REGEX = "^.*(?=.{8,64})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W]).*$";
+    public static final String PASSWORD_REGEX = "^.*(?=.{8,64})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W]).*$";
 
     @Required
-    @Unique
+    @Unique(message = "validation.user.login.unique")
     @XmlElement()
     public String login;
 
-    @Required
-    @Match(value = PASSWORD_REGEX)
+    @Required(message = "validation.user.password.required")
+    @Match(message = "validation.user.password.match", value = PASSWORD_REGEX)
     public String password;
 
     @Transient
     public String password2;
 
-    @Required
+    @Required(message = "validation.user.fullName.required")
     @XmlElement
     public String fullName;
 
     public Date lastLogin;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<User> following;
 
-    @ManyToMany(mappedBy = "following", fetch = FetchType.LAZY)
-    public List<User> followedBy;
+    /*@ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
+    public List<User> followedBy;*/
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Tweet> tweets;
@@ -77,6 +77,11 @@ public class User extends Model {
         }
     }
 
+    public boolean isAdmin() {
+        Role adminRole = Role.find("byRoleName", "ROLE_ADMIN").first();
+        return adminRole != null && this.userRoles.contains(adminRole);
+    }
+
     public User(String login, String password, String password2, String fullName) {
         this.login = login;
         this.password = password;
@@ -84,7 +89,7 @@ public class User extends Model {
 
         this.lastLogin = new Date();
         this.following = new ArrayList<User>();
-        this.followedBy = new ArrayList<User>();
+        //this.followedBy = new ArrayList<User>();
         this.tweets = new ArrayList<Tweet>();
         this.readTweets = new ArrayList<Tweet>();
         this.userRoles = new HashSet<Role>();

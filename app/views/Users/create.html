@@ -1,19 +1,21 @@
 #{extends 'main.html' /}
-#{set title:'Create user' /}
+#{set title:'title.create' /}
 
 
-#{form @Users.save()}
-<p><label for="login">Login: </label><br/>
-    <input type="text" name="user.login" id="login" value="${user?.login}"/></p>
+<div id="newUser" class="ui-widget ui-widget-content ui-corner-all" style="padding: 0.3em;">
+    #{form @Users.save()}
+    <div><label for="login">&{'secure.username'}</label><br/>
+        <input type="text" name="user.login" id="login" value="${user?.login}"/></div>
 
-<p><label for="fullName">Full name: </label><br/>
-    <input type="text" name="user.fullName" id="fullName" value="${user?.fullName}"/></p>
+    <div><label for="fullName">&{'secure.full.name'}</label><br/>
+        <input type="text" name="user.fullName" id="fullName" value="${user?.fullName}"/></div>
 
-<p><label for="password">Password: </label><br/>
-    <input type="password" name="user.password" id="password"/></p>
+    <div><label for="password">&{'secure.password'} </label><br/>
+        <input type="password" name="user.password" id="password"/></div>
 
-<p><label for="password2">Repeat password: </label><br/>
-    <input type="password" name="user.password2" id="password2"/></p>
+    <div><label for="password2">&{'secure.repeat.password'} </label><br/>
+        <input type="password" name="user.password2" id="password2"/></div>
 
-<p><input type="submit" name="create" value="Save"/></p>
-#{/form}
+    <div><input type="submit" name="create" value="&{'common.save'}"/></div>
+    #{/form}
+</div>

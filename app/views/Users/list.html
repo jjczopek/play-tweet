@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'title.users' /}
+
+<div class="ui-widget-content ui-corner-all" style="padding: 0.3em;">
+    #{if users?.size > 0}
+    <ul>
+        #{list items:users, as:'user'}
+        <li>#{a @Users.profile(user.login)}${user.fullName}#{/a}</li>
+        #{/list}
+    </ul>
+    #{/if}
+    #{else}
+    <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+        &{'user.list.empty'}</p>
+    #{/else}
+</div>

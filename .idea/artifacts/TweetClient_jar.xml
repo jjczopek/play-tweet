@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact name="TweetClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TweetClient</output-path>
+    <root id="root">
+      <element id="archive" name="TweetClient.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/../TweetClient/src/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="TweetClient" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="RestEasy" />
+        <element id="library" level="project" name="Apache Commons Cli" />
+        <element id="file-copy" path="$PROJECT_DIR$/../../log4j-1.2.8.jar" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/../TweetClient/run.bat" />
+      <element id="file-copy" path="$PROJECT_DIR$/../TweetClient/run[yuri.net.pl].bat" />
+    </root>
+  </artifact>
+</component>

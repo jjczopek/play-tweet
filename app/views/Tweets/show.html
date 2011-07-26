@@ -1,4 +1,4 @@
 #{extends 'main.html' /}
-#{set title:"${tweet?.author?.fullName}'s tweets"  /}
+#{set title:'title.tweet'  /}
 
-#{tweet tweet:tweet /}
+#{tweet tweet:tweet, loggedUser:loggedUser /}

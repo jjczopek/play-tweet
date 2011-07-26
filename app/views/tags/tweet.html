@@ -1,6 +1,9 @@
 <div class="ui-widget-content ui-corner-all" style="margin-top:0.3em; padding:0.2em;">
-    <div style="font-size:0.8em;"><strong>Author:</strong> <a href="@{Tweets.userTweets(_tweet?.author?.login)}">${_tweet?.author?.fullName}</a>
-        || ${_tweet?.dateCreated?.format("dd-MM-yyyy HH:mm:ss")}
+    <div style="font-size:0.8em;"><strong>&{'common.author'}:</strong> #{a
+        @Users.profile(_tweet?.author?.login)}${_tweet?.author?.fullName}#{/a}
+        || ${_tweet?.dateCreated?.format("dd-MM-yyyy HH:mm:ss")} #{if _loggedUser?.admin} || <a
+                href="@{Tweets.delete(_tweet.id)}" onclick="return confirm(i18n('tweet.delete.confirmation'))"> X </a>
+        #{/if}
     </div>
     <hr/>
     <div>

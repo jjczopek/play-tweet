@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>#{get 'title' /}</title>
+    <title>&{title}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/sunny/jquery-ui-1.8.13.custom.css'}">
@@ -14,10 +14,12 @@
             charset="utf-8"></script>
     <script src="@{'/public/javascripts/tweet.js'}" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
+    #{i18n keys:['tweet.delete.confirmation'] /}
+
 </head>
 <body class="ui-widget">
-<div id="header">header</div>
-<!-- #header end -->
+<img src="@{'/public/images/yate_logo.png'}"/>
+
 <div id="content">
 
     #{ifErrors}
@@ -39,7 +41,7 @@
         <div style="padding: 0.3em;" class="ui-state-error ui-corner-all">
             <p>
                 <span style="float: left; margin-right: 0.3em; margin-top:0.3em;" class="ui-icon ui-icon-alert"></span>
-                ${flash.error}
+                &{flash.error}
             </p>
         </div>
     </div>
@@ -48,7 +50,7 @@
     <div class="ui-widget" style="padding: 0.3em;">
         <div style="margin-top: 0.3em; padding: 0pt 0.7em; font-size:0.7em;" class="ui-state-highlight ui-corner-all">
             <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-                ${flash.success}</p>
+                &{flash.success}</p>
         </div>
     </div>
     #{/if}
@@ -58,12 +60,19 @@
 <!-- #content end -->
 <div id="rightSection" class="ui-widget ui-widget-content ui-corner-all" style="padding: 0.3em">
     #{if session["username"]}
-    Logged in as <strong>${session.username}</strong><br/>
-    #{a @Secure.logout()}Logout #{/a}
+    #{a @Users.profile(session.username)}&{'main.loggedin.message', session.username}#{/a}
+    <br/>
+    #{a @Secure.logout()}&{'common.logout'} #{/a}<br/>
+    #{a @Tweets.post()}&{'common.navigation.new.tweet'} #{/a} <br/>
+    #{a @Users.changePassword()}&{'common.navigation.change.password'} #{/a}
     #{/if}
     #{else}
-    #{a @Secure.login()}Login#{/a}
-    #{/else}
+    #{a @Secure.login()}&{'common.navigation.login'}#{/a}<br/>
+    #{a @Users.create()}&{'common.navigation.new.account'}#{/a}
+    #{/else}<br/>
+    #{a @Users.list()}&{'common.navigation.user.list'}#{/a}<br/>
+    #{a @Application.index()}&{'common.navigation.main.page'}#{/a}<br/>
+    #{a @Tweets.all()}&{'common.navigation.all.tweets'}#{/a}
 </div>
 <!-- #rightSection end -->
 </body>

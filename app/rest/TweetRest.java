@@ -3,9 +3,11 @@ package rest;
 import models.RestSession;
 import models.Tweet;
 import models.User;
-import org.jboss.resteasy.annotations.providers.jaxb.Wrapped;
 
 import javax.ws.rs.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,31 +41,61 @@ public class TweetRest {
     @GET
     @Path("/tweets/all")
     @Produces("application/xml")
-    @Wrapped(element = "tweets")
-    public List<Tweet> all(@QueryParam("page") @DefaultValue("1") Integer page) {
-        return Tweet.find("order by dateCreated desc").fetch(page, 100);
+    //@Wrapped(element = "tweets")
+    public TweetList all(@QueryParam("page") @DefaultValue("1") Integer page) {
+        //return Tweet.find("order by dateCreated desc").fetch(page, 100);
+        List<Tweet> l = Tweet.find("order by dateCreated desc").fetch(page, 100);
+        return new TweetList(l);
     }
 
     @GET
     @Path("/tweets/{userId}")
     @Produces("application/xml")
-    @Wrapped(element = "tweets")
-    public List<Tweet> userTweets(@PathParam("userId") Long userId) {
+    //@Wrapped(element = "tweets")
+    public TweetList userTweets(@PathParam("userId") Long userId) {
         User user = User.findById(userId);
-        return (user != null) ? user.tweets : Collections.<Tweet>emptyList();
+
+        List<Tweet> tweetList = (user != null) ? user.tweets : Collections.<Tweet>emptyList();
+
+        return new TweetList(tweetList);
     }
 
 
     @GET
     @Path("/tweets/followed")
     @Produces("application/xml")
-    @Wrapped(element = "tweets")
-    public List<Tweet> followingUsersTweets(@QueryParam("sessionId") String sessionId) {
+    //@Wrapped(element = "tweets")
+    public TweetList followingUsersTweets(@QueryParam("sessionId") String sessionId) {
+
+        List<Tweet> tweetList = new ArrayList<Tweet>();
+
         if (RestSession.isSessionValid(sessionId)) {
             User loogedUser = RestSession.getUserFromSession(sessionId);
-            return Tweet.getFollowedUsersTweets(loogedUser);
-        } else {
-            return Collections.emptyList();
+            tweetList = Tweet.getFollowedUsersTweets(loogedUser);
+        }
+
+        return new TweetList(tweetList);
+    }
+
+    @XmlRootElement(name = "tweetList")
+    private class TweetList {
+
+        private List<Tweet> tweets;
+
+        public TweetList(List<Tweet> tweets) {
+            this.tweets = tweets;
+        }
+
+        public TweetList() {
+        }
+
+        @XmlElement(name = "tweet")
+        public List<Tweet> getTweets() {
+            return tweets;
+        }
+
+        public void setTweets(List<Tweet> tweets) {
+            this.tweets = tweets;
         }
     }
 

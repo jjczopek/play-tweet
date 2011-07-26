@@ -1,10 +1,16 @@
 #{extends 'main.html' /}
-#{set title:'Post tweet' /}
+#{set title:'title.post' /}
 
-#{form @Tweets.save()}
-<p><label for="content">Tweet </label><br/>
-    <textarea rows="5" cols="10" id="content" name="content">${content}</textarea>
-</p>
+<div id="login" class="ui-widget ui-widget-content ui-corner-all" style="padding: 0.3em;">
 
-<p><input type="submit" name="create" value="Save"/></p>
-#{/form}
+    #{form @Tweets.save()}
+
+    <div>
+        <label for="content">&{'tweet.content'}:</label>
+        <textarea rows="5" style="width: 95%;" id="content" name="content"> </textarea></div>
+    <br/>
+
+    <div><input type="submit" id="save" value="&{'common.save'}"/></div>
+
+    #{/form}
+</div>

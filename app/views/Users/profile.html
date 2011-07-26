@@ -1,26 +1,44 @@
 #{extends 'main.html' /}
-#{set title:'User profile' /}
+#{set title: 'title.profile' /}
 
 <div class="ui-widget-content ui-corner-all" style="padding: 0.3em;">
-    <div><strong>Login:</strong> ${user.login}</div>
-    <div><strong>Full name:</strong> ${user.fullName}</div>
-    <div><strong>Last seen:</strong> ${user.lastLogin?.format('dd-MM-yyyy HH:mm')?: "n/a"}</div>
-    <div><strong>Tweets so far:</strong> ${user.tweets.size()}</div>
-    <div>Currently following <strong>${user.following?.size()}</strong> users</div>
+    <div><strong>&{'secure.username'}</strong> ${user.login}</div>
+    <div><strong>&{'secure.full.name'}</strong> ${user.fullName}</div>
+    <div><strong>&{'user.profile.lastseen'}</strong>
+        ${user.lastLogin?.format('dd-MM-yyyy HH:mm')?: messages.get('common.na')}
+    </div>
+    <div><strong>&{'user.profile.tweets.count'}</strong> #{a @Tweets.userTweets(user.login)}${user.tweets.size()}#{/a}
+    </div>
+    <div><strong>&{'user.profile.isAdmin'}</strong>
+        ${user.admin ? messages.get('common.yes') : messages.get('common.no')}
+    </div>
+
+    #{if session["username"]}
+    <div>#{a @Users.follow(user.login)}&{'user.profile.follow'}#{/a}</div>
+    #{/if}
+
+    <div>&{'user.profile.currently.following', user.following?.size()}</div>
+
     #{if user.following.size() > 0}
     <p class="following" style="font-size: 0.6em;">
+    <ul>
         #{list items:user.following, as:'user'}
-        #{a @Users.profile(user.login)}${user.fullName}#{/a}
+        <li>#{a @Users.profile(user.login)}${user.fullName}#{/a}</li>
         #{/list}
+    </ul>
     </p>
     #{/if}
-
-    <div>Currently followed by <strong>${user.followedBy?.size()}</strong> users</div>
-
+    *{
+    <div>&{'user.profile.currently.followed', user.followedBy?.size()}</div>
     #{if user.followedBy.size() > 0}
-    <p class="followedBy" style="font-size: 0.6em;">#{list items:user.followedBy, as:'user'}
-        #{a @Users.profile(user.login)}${user.fullName}#{/a}
+    <p class="followedBy" style="font-size: 0.6em;">
+    <ul>
+        #{list items:user.followedBy, as:'user'}
+        <li>#{a @Users.profile(user.login)}${user.fullName}#{/a}</li>
         #{/list}
+    </ul>
     </p>
     #{/if}
+
+    }*
 </div>

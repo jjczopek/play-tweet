@@ -1,38 +1,33 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title: 'title.index' /}
 
-<h4 class="ui-state-highlight ui-corner-all" style="padding: 0.2em;">
-    Welcome
-    #{if loggedUser}
-    ${loggedUser.fullName}
-    #{/if}
-    #{else}
-    stranger
-    #{/else}
-    !
-</h4>
 
 <div style="padding: 0.3em;">
+    <div style="margin-top: 0.3em; padding: 0pt 0.7em; font-size:0.7em; margin-bottom: 0.3em;"
+         class="ui-state-highlight ui-corner-all">
+        <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+            &{'main.welcome.message', loggedUser?.fullName ?: messages.get('common.stranger')}</p>
+    </div>
 
-    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">Newest tweets</div>
+    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">&{'main.tweets.newest'}</div>
     #{list items: newestTweets, as:'tweet'}
-    #{tweet tweet:tweet /}
+    #{tweet tweet:tweet, loggedUser:loggedUser /}
     #{/list}
     #{else}
-    Sorry, no tweets.
+    &{'main.tweets.empty'}
     #{/else}
 </div>
 
 #{if loggedUser}
 <div class="ui-widget" style="padding: 0.3em;">
-    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">Followed users tweets:</div>
+    <div class="ui-state-default ui-corner-all" style="padding: 0.3em;">&{'main.followed.users.tweets'}</div>
     #{list items: followedUsersTweets, as:'tweet'}
-    #{tweet tweet:tweet /}
+    #{tweet tweet:tweet, loggedUser:loggedUser /}
     #{/list}
     #{else}
     <div style="margin-top: 0.3em; padding: 0pt 0.7em; font-size:0.7em;" class="ui-state-highlight ui-corner-all">
         <p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-            Sorry, users You are following didn't tweet anything.</p>
+            &{'main.followed.users.tweets.empty'}</p>
     </div>
 
     #{/else}
